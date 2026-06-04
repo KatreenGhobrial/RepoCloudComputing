@@ -1,9 +1,69 @@
-# ============================================================
-# Cell 2: Plant Image Upload Screen (העלאת תמונות צמחים)
-# Requires: Cell 1 (COMMON_CSS, TOAST_JS) to be run first.
-# ============================================================
+import base64
+import json
+from IPython.display import HTML, display, JSON
+from google.colab import output
+import google.generativeai as genai
 
-from IPython.display import HTML, display
+# # ============================================================
+# # 1. לוגיקת צד שרת (Backend) - שימוש ב-Google Gemini לניתוח תמונות
+# # ============================================================
+
+# # המפתח החדש שלך מוזן כאן
+# genai.configure(api_key="AQ.ng2w")
+# model = genai.GenerativeModel("gemini-2.5-flash")
+
+# def analyze_image_python(base64_str, filename):
+#     """
+#     פונקציית פייתון שתופעל אוטומטית מהדפדפן.
+#     ממירה את התמונה, שולחת ל-Gemini ומחזירה JSON מובנה.
+#     """
+#     try:
+#         # א. ניקוי קידומת ה-base64 אם קיימת
+#         if "," in base64_str:
+#             base64_str = base64_str.split(",")[1]
+            
+#         # ב. המרת המחרוזת חזרה לבייטים עבור מודל הראייה של Gemini
+#         image_bytes = base64.b64decode(base64_str)
+#         image_part = {
+#             "mime_type": "image/jpeg",
+#             "data": image_bytes
+#         }
+            
+#         # ג. הפרומפט שמנחה את ה-AI להחזיר תשובה אגרונומית בפורמט שהממשק מצפה לו
+#         prompt = (
+#             "You are an expert plant pathologist with access to a comprehensive basil research database. "
+#             "Analyze this basil leaf image. Provide a JSON response with exactly three keys: "
+#             "1. 'status': must be exactly one of these strings: 'healthy', 'mild', or 'severe'. "
+#             "2. 'diagnosis': a short string describing the issues found based on your database (e.g., 'Fusarium Wilt detected' or 'Healthy Leaf'). "
+#             "3. 'recommendations': a structured list of 3 actionable steps to treat or maintain the plant. "
+#             "Return ONLY the raw JSON block without markdown formatting."
+#         )
+        
+#         # ד. שליחה למודל Gemini 2.5 Flash
+#         response = model.generate_content([prompt, image_part])
+        
+#         # ה. עיבוד התשובה חזרה לדפדפן
+#         clean_text = response.text.strip().replace("```json", "").replace("```", "")
+#         result_dict = json.loads(clean_text)
+#         return JSON(result_dict)
+        
+#     except Exception as e:
+#         print(f"Error in Python Backend: {e}")
+#         return JSON({
+#             "status": "unknown",
+#             "diagnosis": "שגיאת תקשורת עם מודל ה-AI",
+#             "recommendations": ["נסה להעלות את התמונה שוב", str(e)]
+#         })
+
+# # ============================================================
+# # שורת החובה! בלעדיה הממשק ייתקע לנצח על "Analyzing..."
+# # ============================================================
+# output.register_callback('analyze_image_with_ai', analyze_image_python)
+
+
+# ------------------------------------------------------------
+# 2. ממשק המשתמש (Frontend - HTML/CSS/JS)
+# ------------------------------------------------------------
 
 display(HTML(COMMON_CSS + """
 <style>
@@ -133,7 +193,6 @@ display(HTML(COMMON_CSS + """
     background-size: 200% 100%;
     border-radius: 3px;
     transition: width 0.15s linear;
-    animation: shimmer 1.5s ease infinite;
 }
 
 /* ========== GALLERY GRID ========== */
@@ -230,61 +289,36 @@ display(HTML(COMMON_CSS + """
     align-items: center;
     gap: 4px;
 }
-/* Metadata form within each card */
-#uploadScreen .image-card .card-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+
+/* ========== AI RESULTS AREA (Replaces the manual inputs) ========== */
+#uploadScreen .image-card .ai-section {
+    border-top: 1px solid rgba(74,124,46,0.3); 
+    margin-top: 10px; 
+    padding-top: 10px;
 }
-#uploadScreen .image-card .card-form label {
-    font-size: 11px;
-    color: #9cb896;
-    font-weight: 600;
+#uploadScreen .image-card .ai-title {
+    font-size: 11px; 
+    color: #5a7a52; 
+    font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.6px;
-    margin-bottom: 2px;
 }
-#uploadScreen .image-card .card-form select {
-    padding: 8px 12px;
-    background: rgba(15, 26, 10, 0.7);
-    border: 1px solid rgba(74,124,46,0.2);
-    border-radius: 8px;
-    color: #e8f0e4;
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    cursor: pointer;
-    outline: none;
-    transition: all 0.25s ease;
-    width: 100%;
+#uploadScreen .image-card .ai-diagnosis {
+    font-size: 14px; 
+    color: #c2eaaf; 
+    margin-top: 4px;
+    margin-bottom: 8px;
+    font-weight: 600;
 }
-#uploadScreen .image-card .card-form select:focus {
-    border-color: #3a7d2a;
-    box-shadow: 0 0 0 2px rgba(58,125,42,0.12);
+#uploadScreen .image-card .ai-recs {
+    padding-left: 15px; 
+    font-size: 12px; 
+    color: #9cb896; 
+    margin-top: 4px;
+    line-height: 1.5;
 }
-#uploadScreen .image-card .card-form select option {
-    background: #1a2614;
-    color: #e8f0e4;
-}
-#uploadScreen .image-card .card-form textarea {
-    padding: 8px 12px;
-    background: rgba(15, 26, 10, 0.7);
-    border: 1px solid rgba(74,124,46,0.2);
-    border-radius: 8px;
-    color: #e8f0e4;
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    resize: vertical;
-    min-height: 48px;
-    outline: none;
-    transition: all 0.25s ease;
-    width: 100%;
-}
-#uploadScreen .image-card .card-form textarea::placeholder {
-    color: #5a7a52;
-}
-#uploadScreen .image-card .card-form textarea:focus {
-    border-color: #3a7d2a;
-    box-shadow: 0 0 0 2px rgba(58,125,42,0.12);
+#uploadScreen .image-card .ai-recs li {
+    margin-bottom: 4px;
 }
 
 /* ========== FILTER TABS ROW ========== */
@@ -352,16 +386,14 @@ display(HTML(COMMON_CSS + """
 
 <div class="bg-app" id="uploadScreen">
 
-    <!-- ===== HEADER ===== -->
     <div class="screen-header">
         <div class="icon">📸</div>
         <div>
             <h1>העלאת תמונות צמחים</h1>
-            <p class="subtitle">Upload and manage images of your basil plants for health analysis</p>
+            <p class="subtitle">AI-powered Basil Health Analysis</p>
         </div>
     </div>
 
-    <!-- ===== STATS METRICS ===== -->
     <div class="metrics-grid" id="uploadMetrics">
         <div class="metric-card">
             <div class="metric-icon">🖼️</div>
@@ -385,7 +417,6 @@ display(HTML(COMMON_CSS + """
         </div>
     </div>
 
-    <!-- ===== DRAG & DROP ZONE ===== -->
     <div class="upload-zone" id="uploadDropZone">
         <span class="zone-icon">🌿</span>
         <div class="zone-title">Drag & drop your basil plant images here</div>
@@ -397,7 +428,6 @@ display(HTML(COMMON_CSS + """
         <input type="file" id="uploadFileInput" class="hidden-input" multiple accept="image/jpeg,image/png,image/webp">
     </div>
 
-    <!-- ===== UPLOAD PROGRESS ===== -->
     <div class="upload-progress-wrap" id="uploadProgressWrap">
         <div class="progress-info">
             <span class="filename" id="uploadProgressName">Uploading...</span>
@@ -408,7 +438,6 @@ display(HTML(COMMON_CSS + """
         </div>
     </div>
 
-    <!-- ===== GALLERY SECTION ===== -->
     <div class="glass-card" id="uploadGallerySection" style="display:none; margin-top:8px;">
         <div class="gallery-header">
             <div class="section-title">
@@ -421,17 +450,15 @@ display(HTML(COMMON_CSS + """
             </div>
         </div>
         <div class="gallery-grid" id="uploadGalleryGrid">
-            <!-- Image cards injected here -->
-        </div>
+            </div>
     </div>
 
-    <!-- ===== EMPTY STATE ===== -->
     <div class="upload-empty" id="uploadEmptyState">
         <span class="empty-leaf">🍃</span>
         <div class="empty-title">Upload your first basil plant image</div>
         <div class="empty-sub">
             Drag and drop or browse to add images of your basil plants.
-            Track their health over time with our analysis tools.
+            Track their health over time with our AI analysis tools.
         </div>
     </div>
 
@@ -447,7 +474,7 @@ display(HTML(COMMON_CSS + """
 
     // --- State ---
     const state = {
-        images: [],       // { id, name, size, dataUrl, timestamp, status, notes }
+        images: [],       // { id, name, size, dataUrl, timestamp, status, diagnosis, recommendations }
         nextId: 1,
         activeFilter: 'all',
         totalBytes: 0
@@ -488,6 +515,7 @@ display(HTML(COMMON_CSS + """
         const files = e.dataTransfer.files;
         if (files.length) handleFiles(files);
     });
+    
     // Click anywhere on the zone (except the button itself)
     dropZone.addEventListener('click', e => {
         if (e.target.id !== 'uploadBrowseBtn' && !e.target.closest('#uploadBrowseBtn')) {
@@ -518,8 +546,8 @@ display(HTML(COMMON_CSS + """
         processFileQueue(files, 0);
     }
 
-    // Process files one-by-one with progress simulation
-    function processFileQueue(files, idx) {
+    // Process files one-by-one and send to AI Backend
+    async function processFileQueue(files, idx) {
         if (idx >= files.length) {
             progressWrap.style.display = 'none';
             return;
@@ -527,45 +555,60 @@ display(HTML(COMMON_CSS + """
         const file = files[idx];
         progressWrap.style.display = 'block';
         progressName.textContent = file.name;
-        progressPct.textContent = '0%';
-        progressFill.style.width = '0%';
+        progressPct.textContent = 'Preparing...';
+        progressFill.style.width = '30%';
 
-        // Read file
         const reader = new FileReader();
-        reader.onload = function(ev) {
-            // Simulate upload progress
-            simulateProgress(0, () => {
-                const img = {
-                    id: state.nextId++,
-                    name: file.name,
-                    size: file.size,
-                    dataUrl: ev.target.result,
-                    timestamp: new Date().toLocaleString(),
-                    status: 'unknown',   // default
-                    notes: ''
-                };
-                state.images.push(img);
-                state.totalBytes += file.size;
-                updateStats();
-                renderGallery();
-                showToast('✨ "' + file.name + '" uploaded successfully!', 'success');
-                // Process next file
-                setTimeout(() => processFileQueue(files, idx + 1), 200);
-            });
+        reader.onload = async function(ev) {
+            const base64Data = ev.target.result;
+            
+            // Create pending image object
+            const img = {
+                id: state.nextId++,
+                name: file.name,
+                size: file.size,
+                dataUrl: base64Data,
+                timestamp: new Date().toLocaleString(),
+                status: 'unknown',
+                diagnosis: 'AI is analyzing...',
+                recommendations: []
+            };
+            
+            state.images.unshift(img); // Add to top of list
+            state.totalBytes += file.size;
+            renderGallery();
+            updateStats();
+
+            progressPct.textContent = 'Running AI Analysis...';
+            progressFill.style.width = '80%';
+
+            try {
+                // MAGIC: Call Python function directly from JS in Colab
+                const result = await google.colab.kernel.invokeFunction('analyze_image_with_ai', [base64Data, file.name], {});
+                
+                // Parse AI response
+                const aiData = result.data['application/json'];
+                img.status = aiData.status;
+                img.diagnosis = aiData.diagnosis;
+                img.recommendations = aiData.recommendations;
+                
+                showToast('✨ AI Analysis complete for ' + file.name, 'success');
+            } catch (err) {
+                console.error(err);
+                img.status = 'severe';
+                img.diagnosis = 'Error communicating with AI Backend';
+                showToast('Error analyzing ' + file.name, 'error');
+            }
+
+            // Update UI with final AI results
+            updateStats();
+            renderGallery();
+            
+            // Process next file
+            setTimeout(() => processFileQueue(files, idx + 1), 300);
         };
         reader.readAsDataURL(file);
     }
-
-    function simulateProgress(pct, done) {
-        if (pct > 100) { done(); return; }
-        progressFill.style.width = pct + '%';
-        progressPct.textContent = Math.min(pct, 100) + '%';
-        const increment = pct < 60 ? randomInt(8, 18) : pct < 90 ? randomInt(4, 10) : randomInt(2, 5);
-        const delay = pct < 60 ? randomInt(30, 60) : randomInt(50, 100);
-        setTimeout(() => simulateProgress(pct + increment, done), delay);
-    }
-
-    function randomInt(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
 
     // ===== STATS UPDATE =====
     function updateStats() {
@@ -617,9 +660,14 @@ display(HTML(COMMON_CSS + """
             const card = document.createElement('div');
             card.className = 'image-card';
             card.style.animationDelay = (i * 0.07) + 's';
-            card.dataset.imgId = img.id;
 
             const statusBadge = getStatusBadge(img.status);
+            
+            // Format recommendations list
+            let recsHtml = '';
+            if (img.recommendations && img.recommendations.length > 0) {
+                recsHtml = '<ul class="ai-recs">' + img.recommendations.map(r => `<li>${r}</li>`).join('') + '</ul>';
+            }
 
             card.innerHTML = `
                 <div class="card-thumb-wrap">
@@ -632,17 +680,12 @@ display(HTML(COMMON_CSS + """
                         <span>📏 ${formatBytes(img.size)}</span>
                         <span>🕒 ${img.timestamp}</span>
                     </div>
-                    <div style="margin-bottom:12px;">${statusBadge}</div>
-                    <div class="card-form">
-                        <label>Health Status</label>
-                        <select onchange="window._uploadSetStatus(${img.id}, this.value)">
-                            <option value="unknown" ${img.status==='unknown'?'selected':''}>❓ Unknown</option>
-                            <option value="healthy" ${img.status==='healthy'?'selected':''}>🟢 Healthy</option>
-                            <option value="mild" ${img.status==='mild'?'selected':''}>🟡 Mild Issue</option>
-                            <option value="severe" ${img.status==='severe'?'selected':''}>🔴 Severe Issue</option>
-                        </select>
-                        <label>Notes</label>
-                        <textarea placeholder="Add observations…" onchange="window._uploadSetNotes(${img.id}, this.value)">${img.notes}</textarea>
+                    <div style="margin-bottom:8px;">${statusBadge}</div>
+                    
+                    <div class="ai-section">
+                        <div class="ai-title">AI Diagnosis</div>
+                        <div class="ai-diagnosis">${img.diagnosis}</div>
+                        ${recsHtml ? '<div class="ai-title" style="margin-top:12px;">Treatment Steps</div>' + recsHtml : ''}
                     </div>
                 </div>`;
             galleryGrid.appendChild(card);
@@ -654,20 +697,19 @@ display(HTML(COMMON_CSS + """
             case 'healthy': return '<span class="badge badge-success">🟢 Healthy</span>';
             case 'mild':    return '<span class="badge badge-warning">🟡 Mild Issue</span>';
             case 'severe':  return '<span class="badge badge-danger">🔴 Severe Issue</span>';
-            default:        return '<span class="badge badge-neutral">❓ Unknown</span>';
+            default:        return '<span class="badge badge-neutral">⏳ Analyzing...</span>';
         }
     }
 
     // ===== FILTER TABS =====
     window.uploadFilterImages = function(filter, tabEl) {
         state.activeFilter = filter;
-        // Update active tab style
         document.querySelectorAll('#uploadFilterTabs .tab').forEach(t => t.classList.remove('active'));
         tabEl.classList.add('active');
         renderGallery();
     };
 
-    // ===== IMAGE ACTIONS (global handlers) =====
+    // ===== IMAGE ACTIONS =====
     window._uploadDeleteImage = function(id) {
         const idx = state.images.findIndex(i => i.id === id);
         if (idx === -1) return;
@@ -677,19 +719,6 @@ display(HTML(COMMON_CSS + """
         updateStats();
         renderGallery();
         showToast('"' + img.name + '" deleted.', 'info');
-    };
-
-    window._uploadSetStatus = function(id, value) {
-        const img = state.images.find(i => i.id === id);
-        if (!img) return;
-        img.status = value;
-        updateStats();
-        renderGallery();
-    };
-
-    window._uploadSetNotes = function(id, value) {
-        const img = state.images.find(i => i.id === id);
-        if (img) img.notes = value;
     };
 
     // ===== INITIAL RENDER =====
