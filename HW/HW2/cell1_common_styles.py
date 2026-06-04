@@ -551,6 +551,7 @@ COMMON_CSS = """
 
 # Toast utility function (reusable JS)
 TOAST_JS = """
+<script>
 function showToast(message, type='info') {
     let container = document.getElementById('toastContainer');
     if (!container) {
@@ -565,6 +566,7 @@ function showToast(message, type='info') {
     container.appendChild(toast);
     setTimeout(() => { toast.style.opacity='0'; toast.style.transform='translateX(40px)'; setTimeout(()=>toast.remove(),400); }, 3500);
 }
+</script>
 """
 
 print("✅ Common styles and utilities loaded!")
