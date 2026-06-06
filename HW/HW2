@@ -1,163 +1,25 @@
 {
   "cells": [
     {
-      "cell_type": "code",
-      "execution_count": 87,
+      "cell_type": "markdown",
       "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "collapsed": true,
-        "id": "mFkc2sYTpagM",
-        "outputId": "0390138a-caaa-4a78-dcd5-17571fe43b3f"
+        "id": "view-in-github",
+        "colab_type": "text"
       },
-      "outputs": [
-        {
-          "name": "stdout",
-          "output_type": "stream",
-          "text": [
-            "Defaulting to user installation because normal site-packages is not writeable\n",
-            "Requirement already satisfied: pandas in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (3.0.3)\n",
-            "Requirement already satisfied: numpy in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (2.4.3)\n",
-            "Requirement already satisfied: scikit-learn in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (1.8.0)\n",
-            "Requirement already satisfied: openai in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (2.41.0)\n",
-            "Requirement already satisfied: gradio in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (6.16.0)\n",
-            "Requirement already satisfied: nltk in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (3.9.4)\n",
-            "Requirement already satisfied: sentence-transformers in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (5.5.1)\n",
-            "Requirement already satisfied: chromadb in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (1.5.9)\n",
-            "Requirement already satisfied: markdown in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (3.10.2)\n",
-            "Requirement already satisfied: bs4 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (0.0.2)\n",
-            "Requirement already satisfied: google-generativeai in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (0.8.6)\n",
-            "Requirement already satisfied: python-dateutil>=2.8.2 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from pandas) (2.9.0.post0)\n",
-            "Requirement already satisfied: tzdata in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from pandas) (2026.2)\n",
-            "Requirement already satisfied: scipy>=1.10.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from scikit-learn) (1.17.1)\n",
-            "Requirement already satisfied: joblib>=1.3.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from scikit-learn) (1.5.3)\n",
-            "Requirement already satisfied: threadpoolctl>=3.2.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from scikit-learn) (3.6.0)\n",
-            "Requirement already satisfied: anyio<5,>=3.5.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from openai) (4.12.1)\n",
-            "Requirement already satisfied: distro<2,>=1.7.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from openai) (1.9.0)\n",
-            "Requirement already satisfied: httpx<1,>=0.23.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from openai) (0.28.1)\n",
-            "Requirement already satisfied: jiter<1,>=0.10.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from openai) (0.15.0)\n",
-            "Requirement already satisfied: pydantic<3,>=1.9.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from openai) (2.12.5)\n",
-            "Requirement already satisfied: sniffio in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from openai) (1.3.1)\n",
-            "Requirement already satisfied: tqdm>4 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from openai) (4.68.1)\n",
-            "Requirement already satisfied: typing-extensions<5,>=4.11 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from openai) (4.15.0)\n",
-            "Requirement already satisfied: idna>=2.8 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from anyio<5,>=3.5.0->openai) (3.11)\n",
-            "Requirement already satisfied: certifi in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from httpx<1,>=0.23.0->openai) (2026.2.25)\n",
-            "Requirement already satisfied: httpcore==1.* in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from httpx<1,>=0.23.0->openai) (1.0.9)\n",
-            "Requirement already satisfied: h11>=0.16 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from httpcore==1.*->httpx<1,>=0.23.0->openai) (0.16.0)\n",
-            "Requirement already satisfied: annotated-types>=0.6.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from pydantic<3,>=1.9.0->openai) (0.7.0)\n",
-            "Requirement already satisfied: pydantic-core==2.41.5 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from pydantic<3,>=1.9.0->openai) (2.41.5)\n",
-            "Requirement already satisfied: typing-inspection>=0.4.2 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from pydantic<3,>=1.9.0->openai) (0.4.2)\n",
-            "Requirement already satisfied: audioop-lts<=0.2.2 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (0.2.2)\n",
-            "Requirement already satisfied: brotli>=1.1.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (1.2.0)\n",
-            "Requirement already satisfied: fastapi<1.0,>=0.115.2 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (0.135.1)\n",
-            "Requirement already satisfied: gradio-client==2.5.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (2.5.0)\n",
-            "Requirement already satisfied: groovy~=0.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (0.1.2)\n",
-            "Requirement already satisfied: hf-gradio<1.0,>=0.4.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (0.4.1)\n",
-            "Requirement already satisfied: huggingface-hub<2.0,>=0.33.5 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (1.18.0)\n",
-            "Requirement already satisfied: jinja2<4.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (3.1.6)\n",
-            "Requirement already satisfied: markupsafe<4.0,>=2.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (3.0.3)\n",
-            "Requirement already satisfied: orjson~=3.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (3.11.7)\n",
-            "Requirement already satisfied: packaging in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (26.0)\n",
-            "Requirement already satisfied: pillow<13.0,>=8.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (12.1.1)\n",
-            "Requirement already satisfied: pydub<1.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (0.25.1)\n",
-            "Requirement already satisfied: python-multipart<1.0,>=0.0.18 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (0.0.22)\n",
-            "Requirement already satisfied: pytz>=2017.2 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (2026.2)\n",
-            "Requirement already satisfied: pyyaml<7.0,>=5.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (6.0.3)\n",
-            "Requirement already satisfied: safehttpx<0.2.0,>=0.1.7 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (0.1.7)\n",
-            "Requirement already satisfied: semantic-version~=2.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (2.10.0)\n",
-            "Requirement already satisfied: starlette<2.0,>=1.0.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (1.2.1)\n",
-            "Requirement already satisfied: tomlkit<0.15.0,>=0.12.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (0.14.0)\n",
-            "Requirement already satisfied: typer<1.0,>=0.12 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (0.25.1)\n",
-            "Requirement already satisfied: uvicorn>=0.14.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio) (0.42.0)\n",
-            "Requirement already satisfied: fsspec in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from gradio-client==2.5.0->gradio) (2026.4.0)\n",
-            "Requirement already satisfied: annotated-doc>=0.0.2 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from fastapi<1.0,>=0.115.2->gradio) (0.0.4)\n",
-            "Requirement already satisfied: click>=8.4.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from huggingface-hub<2.0,>=0.33.5->gradio) (8.4.1)\n",
-            "Requirement already satisfied: filelock>=3.10.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from huggingface-hub<2.0,>=0.33.5->gradio) (3.29.1)\n",
-            "Requirement already satisfied: hf-xet<2.0.0,>=1.4.3 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from huggingface-hub<2.0,>=0.33.5->gradio) (1.5.0)\n",
-            "Requirement already satisfied: shellingham>=1.3.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from typer<1.0,>=0.12->gradio) (1.5.4)\n",
-            "Requirement already satisfied: rich>=13.8.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from typer<1.0,>=0.12->gradio) (14.3.3)\n",
-            "Requirement already satisfied: regex>=2021.8.3 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from nltk) (2026.5.9)\n",
-            "Requirement already satisfied: transformers<6.0.0,>=4.41.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from sentence-transformers) (5.10.2)\n",
-            "Requirement already satisfied: torch>=1.11.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from sentence-transformers) (2.12.0)\n",
-            "Requirement already satisfied: tokenizers<=0.23.0,>=0.22.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from transformers<6.0.0,>=4.41.0->sentence-transformers) (0.22.2)\n",
-            "Requirement already satisfied: safetensors>=0.4.3 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from transformers<6.0.0,>=4.41.0->sentence-transformers) (0.7.0)\n",
-            "Requirement already satisfied: build>=1.0.3 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (1.5.0)\n",
-            "Requirement already satisfied: pydantic-settings>=2.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (2.14.1)\n",
-            "Requirement already satisfied: pybase64>=1.4.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (1.4.3)\n",
-            "Requirement already satisfied: onnxruntime>=1.14.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (1.26.0)\n",
-            "Requirement already satisfied: opentelemetry-api>=1.2.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (1.42.1)\n",
-            "Requirement already satisfied: opentelemetry-exporter-otlp-proto-grpc>=1.2.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (1.42.1)\n",
-            "Requirement already satisfied: opentelemetry-sdk>=1.2.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (1.42.1)\n",
-            "Requirement already satisfied: pypika>=0.48.9 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (0.51.1)\n",
-            "Requirement already satisfied: overrides>=7.3.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (7.7.0)\n",
-            "Requirement already satisfied: importlib-resources in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (7.1.0)\n",
-            "Requirement already satisfied: grpcio>=1.58.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (1.78.0)\n",
-            "Requirement already satisfied: bcrypt>=4.0.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (5.0.0)\n",
-            "Requirement already satisfied: kubernetes>=28.1.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (36.0.2)\n",
-            "Requirement already satisfied: tenacity>=8.2.3 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (9.1.4)\n",
-            "Requirement already satisfied: mmh3>=4.0.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (5.2.1)\n",
-            "Requirement already satisfied: jsonschema>=4.19.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from chromadb) (4.26.0)\n",
-            "Requirement already satisfied: beautifulsoup4 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from bs4) (4.14.3)\n",
-            "Requirement already satisfied: google-ai-generativelanguage==0.6.15 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-generativeai) (0.6.15)\n",
-            "Requirement already satisfied: google-api-core in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-generativeai) (2.31.0)\n",
-            "Requirement already satisfied: google-api-python-client in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-generativeai) (2.197.0)\n",
-            "Requirement already satisfied: google-auth>=2.15.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-generativeai) (2.53.0)\n",
-            "Requirement already satisfied: protobuf in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-generativeai) (5.29.6)\n",
-            "Requirement already satisfied: proto-plus<2.0.0dev,>=1.22.3 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-ai-generativelanguage==0.6.15->google-generativeai) (1.28.0)\n",
-            "Requirement already satisfied: googleapis-common-protos<2.0.0,>=1.63.2 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-api-core->google-generativeai) (1.75.0)\n",
-            "Requirement already satisfied: requests<3.0.0,>=2.33.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-api-core->google-generativeai) (2.34.2)\n",
-            "Requirement already satisfied: grpcio-status<2.0.0,>=1.41.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-api-core[grpc]!=2.0.*,!=2.1.*,!=2.10.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,<3.0.0dev,>=1.34.1->google-ai-generativelanguage==0.6.15->google-generativeai) (1.71.2)\n",
-            "Requirement already satisfied: pyasn1-modules>=0.2.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-auth>=2.15.0->google-generativeai) (0.4.2)\n",
-            "Requirement already satisfied: cryptography>=38.0.3 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-auth>=2.15.0->google-generativeai) (48.0.0)\n",
-            "Requirement already satisfied: charset_normalizer<4,>=2 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from requests<3.0.0,>=2.33.0->google-api-core->google-generativeai) (3.4.6)\n",
-            "Requirement already satisfied: urllib3<3,>=1.26 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from requests<3.0.0,>=2.33.0->google-api-core->google-generativeai) (2.6.3)\n",
-            "Requirement already satisfied: pyproject_hooks in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from build>=1.0.3->chromadb) (1.2.0)\n",
-            "Requirement already satisfied: colorama in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from build>=1.0.3->chromadb) (0.4.6)\n",
-            "Requirement already satisfied: cffi>=2.0.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from cryptography>=38.0.3->google-auth>=2.15.0->google-generativeai) (2.0.0)\n",
-            "Requirement already satisfied: pycparser in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from cffi>=2.0.0->cryptography>=38.0.3->google-auth>=2.15.0->google-generativeai) (3.0)\n",
-            "Requirement already satisfied: attrs>=22.2.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from jsonschema>=4.19.0->chromadb) (25.4.0)\n",
-            "Requirement already satisfied: jsonschema-specifications>=2023.03.6 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from jsonschema>=4.19.0->chromadb) (2025.9.1)\n",
-            "Requirement already satisfied: referencing>=0.28.4 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from jsonschema>=4.19.0->chromadb) (0.37.0)\n",
-            "Requirement already satisfied: rpds-py>=0.25.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from jsonschema>=4.19.0->chromadb) (2026.5.1)\n",
-            "Requirement already satisfied: six>=1.9.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from kubernetes>=28.1.0->chromadb) (1.17.0)\n",
-            "Requirement already satisfied: websocket-client!=0.40.0,!=0.41.*,!=0.42.*,>=0.32.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from kubernetes>=28.1.0->chromadb) (1.9.0)\n",
-            "Requirement already satisfied: requests-oauthlib in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from kubernetes>=28.1.0->chromadb) (2.0.0)\n",
-            "Requirement already satisfied: durationpy>=0.7 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from kubernetes>=28.1.0->chromadb) (0.10)\n",
-            "Requirement already satisfied: aiohttp<4.0.0,>=3.13.5 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from kubernetes>=28.1.0->chromadb) (3.14.0)\n",
-            "Requirement already satisfied: aiohappyeyeballs>=2.5.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from aiohttp<4.0.0,>=3.13.5->kubernetes>=28.1.0->chromadb) (2.6.1)\n",
-            "Requirement already satisfied: aiosignal>=1.4.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from aiohttp<4.0.0,>=3.13.5->kubernetes>=28.1.0->chromadb) (1.4.0)\n",
-            "Requirement already satisfied: frozenlist>=1.1.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from aiohttp<4.0.0,>=3.13.5->kubernetes>=28.1.0->chromadb) (1.8.0)\n",
-            "Requirement already satisfied: multidict<7.0,>=4.5 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from aiohttp<4.0.0,>=3.13.5->kubernetes>=28.1.0->chromadb) (6.7.1)\n",
-            "Requirement already satisfied: propcache>=0.2.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from aiohttp<4.0.0,>=3.13.5->kubernetes>=28.1.0->chromadb) (0.4.1)\n",
-            "Requirement already satisfied: yarl<2.0,>=1.17.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from aiohttp<4.0.0,>=3.13.5->kubernetes>=28.1.0->chromadb) (1.23.0)\n",
-            "Requirement already satisfied: flatbuffers in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from onnxruntime>=1.14.1->chromadb) (25.12.19)\n",
-            "Requirement already satisfied: opentelemetry-exporter-otlp-proto-common==1.42.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from opentelemetry-exporter-otlp-proto-grpc>=1.2.0->chromadb) (1.42.1)\n",
-            "Requirement already satisfied: opentelemetry-proto==1.42.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from opentelemetry-exporter-otlp-proto-grpc>=1.2.0->chromadb) (1.42.1)\n",
-            "Requirement already satisfied: opentelemetry-semantic-conventions==0.63b1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from opentelemetry-sdk>=1.2.0->chromadb) (0.63b1)\n",
-            "Requirement already satisfied: pyasn1<0.7.0,>=0.6.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from pyasn1-modules>=0.2.1->google-auth>=2.15.0->google-generativeai) (0.6.3)\n",
-            "Requirement already satisfied: python-dotenv>=0.21.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from pydantic-settings>=2.0->chromadb) (1.2.2)\n",
-            "Requirement already satisfied: markdown-it-py>=2.2.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from rich>=13.8.0->typer<1.0,>=0.12->gradio) (4.0.0)\n",
-            "Requirement already satisfied: pygments<3.0.0,>=2.13.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from rich>=13.8.0->typer<1.0,>=0.12->gradio) (2.19.2)\n",
-            "Requirement already satisfied: mdurl~=0.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from markdown-it-py>=2.2.0->rich>=13.8.0->typer<1.0,>=0.12->gradio) (0.1.2)\n",
-            "Requirement already satisfied: setuptools<82 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from torch>=1.11.0->sentence-transformers) (81.0.0)\n",
-            "Requirement already satisfied: sympy>=1.13.3 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from torch>=1.11.0->sentence-transformers) (1.14.0)\n",
-            "Requirement already satisfied: networkx>=2.5.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from torch>=1.11.0->sentence-transformers) (3.6.1)\n",
-            "Requirement already satisfied: mpmath<1.4,>=1.1.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from sympy>=1.13.3->torch>=1.11.0->sentence-transformers) (1.3.0)\n",
-            "Requirement already satisfied: httptools>=0.6.3 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from uvicorn[standard]>=0.18.3->chromadb) (0.7.1)\n",
-            "Requirement already satisfied: watchfiles>=0.20 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from uvicorn[standard]>=0.18.3->chromadb) (1.1.1)\n",
-            "Requirement already satisfied: websockets>=10.4 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from uvicorn[standard]>=0.18.3->chromadb) (16.0)\n",
-            "Requirement already satisfied: soupsieve>=1.6.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from beautifulsoup4->bs4) (2.8.4)\n",
-            "Requirement already satisfied: httplib2<1.0.0,>=0.19.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-api-python-client->google-generativeai) (0.31.2)\n",
-            "Requirement already satisfied: google-auth-httplib2<1.0.0,>=0.2.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-api-python-client->google-generativeai) (0.4.0)\n",
-            "Requirement already satisfied: uritemplate<5,>=3.0.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from google-api-python-client->google-generativeai) (4.2.0)\n",
-            "Requirement already satisfied: pyparsing<4,>=3.1 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from httplib2<1.0.0,>=0.19.0->google-api-python-client->google-generativeai) (3.3.2)\n",
-            "Requirement already satisfied: oauthlib>=3.0.0 in C:\\Users\\liele\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python313\\site-packages (from requests-oauthlib->kubernetes>=28.1.0->chromadb) (3.3.1)\n"
-          ]
-        }
-      ],
       "source": [
-        "!pip install pandas numpy scikit-learn openai gradio nltk sentence-transformers chromadb markdown bs4 google-generativeai "
+        "<a href=\"https://colab.research.google.com/github/KatreenGhobrial/RepoCloudComputing/blob/main/HW/HW2\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "collapsed": true,
+        "id": "mFkc2sYTpagM"
+      },
+      "outputs": [],
+      "source": [
+        "!pip install pandas numpy scikit-learn openai gradio nltk sentence-transformers chromadb markdown bs4 google-generativeai"
       ]
     },
     {
@@ -242,46 +104,12 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 89,
+      "execution_count": null,
       "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
         "collapsed": true,
-        "id": "MLTqJa1Zoyys",
-        "outputId": "99e6ed1d-83e8-4235-d400-fd917e2a981d"
+        "id": "MLTqJa1Zoyys"
       },
-      "outputs": [
-        {
-          "name": "stdout",
-          "output_type": "stream",
-          "text": [
-            "=== אינדקס המילים המשמעותיות (לשימוש במסד הנתונים) ===\n",
-            "Term: led | Count: 2 | DocIDs: ['https://pmc.ncbi.nlm.nih.gov/articles/PMC6423023/']\n",
-            "Term: spectra | Count: 1 | DocIDs: ['https://pmc.ncbi.nlm.nih.gov/articles/PMC6423023/']\n",
-            "Term: growth | Count: 2 | DocIDs: ['https://pmc.ncbi.nlm.nih.gov/articles/PMC6423023/', 'https://doi.org/10.1094/PHP-2015-0120-BR']\n",
-            "Term: biomass | Count: 1 | DocIDs: ['https://pmc.ncbi.nlm.nih.gov/articles/PMC6423023/']\n",
-            "Term: phenolic | Count: 1 | DocIDs: ['https://pmc.ncbi.nlm.nih.gov/articles/PMC6423023/']\n",
-            "Term: trichomes | Count: 1 | DocIDs: ['https://pmc.ncbi.nlm.nih.gov/articles/PMC6423023/']\n",
-            "Term: terpenoids | Count: 1 | DocIDs: ['https://pmc.ncbi.nlm.nih.gov/articles/PMC6423023/']\n",
-            "Term: nanoparticles | Count: 1 | DocIDs: ['https://www.tandfonline.com/doi/full/10.1080/01904167.2020.1724305']\n",
-            "Term: chlorophyll | Count: 1 | DocIDs: ['https://www.tandfonline.com/doi/full/10.1080/01904167.2020.1724305']\n",
-            "Term: flavonoid | Count: 1 | DocIDs: ['https://www.tandfonline.com/doi/full/10.1080/01904167.2020.1724305']\n",
-            "Term: antioxidant | Count: 1 | DocIDs: ['https://www.tandfonline.com/doi/full/10.1080/01904167.2020.1724305']\n",
-            "Term: mildew | Count: 2 | DocIDs: ['https://apsjournals.apsnet.org/doi/10.1094/PHYTO-02-15-0032-FI']\n",
-            "Term: peronospora | Count: 2 | DocIDs: ['https://apsjournals.apsnet.org/doi/10.1094/PHYTO-02-15-0032-FI']\n",
-            "Term: seed | Count: 1 | DocIDs: ['https://apsjournals.apsnet.org/doi/10.1094/PHYTO-02-15-0032-FI']\n",
-            "Term: fungicides | Count: 1 | DocIDs: ['https://apsjournals.apsnet.org/doi/10.1094/PHYTO-02-15-0032-FI']\n",
-            "Term: essential | Count: 2 | DocIDs: ['https://www.sciencedirect.com/science/article/abs/pii/S0308814607012666']\n",
-            "Term: composition | Count: 2 | DocIDs: ['https://www.sciencedirect.com/science/article/abs/pii/S0308814607012666']\n",
-            "Term: antimicrobial | Count: 2 | DocIDs: ['https://www.sciencedirect.com/science/article/abs/pii/S0308814607012666']\n",
-            "Term: linalool | Count: 1 | DocIDs: ['https://www.sciencedirect.com/science/article/abs/pii/S0308814607012666']\n",
-            "Term: fusarium | Count: 2 | DocIDs: ['https://doi.org/10.1094/PHP-2015-0120-BR']\n",
-            "======================================================\n",
-            "\n"
-          ]
-        }
-      ],
+      "outputs": [],
       "source": [
         "# ==========================================\n",
         "# CELL 2: בניית אינדקס מילות המטרה (תרגול 6)\n",
@@ -320,7 +148,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 90,
+      "execution_count": null,
       "metadata": {
         "id": "AwpVfqdjo1aU"
       },
@@ -421,14 +249,14 @@
         "\n",
         "        if self.use_openai: # (אפשר להשאיר את השם של המשתנה או לשנות ל-use_gemini)\n",
         "            context = \"\\n\\n\".join([f\"Paper: {p['title']}\\nContent: {search_results['documents'][0][i][:400]}...\" for i, p in enumerate(relevant_papers)])\n",
-        "            \n",
+        "\n",
         "            # בניית הפרומפט המלא\n",
         "            prompt = f\"System: You are an agriculture expert. Answer based ONLY on the research provided.\\n\\nQuestion: {query_text}\\n\\nResearch Papers:\\n{context}\"\n",
-        "            \n",
+        "\n",
         "            try:\n",
         "                # שימוש במודל הלייט והמהיר של ג'מיני\n",
         "                text_model = genai.GenerativeModel(\"gemini-2.5-flash\")\n",
-        "                \n",
+        "\n",
         "                # קריאה למודל עם הגדרות (טמפרטורה ואורך טקסט)\n",
         "                response = text_model.generate_content(\n",
         "                    prompt,\n",
@@ -438,7 +266,7 @@
         "                    )\n",
         "                )\n",
         "                response_text = response.text # חילוץ הטקסט מהתשובה של ג'מיני\n",
-        "                \n",
+        "\n",
         "            except Exception as e:\n",
         "                response_text = f\"Gemini AI Error: {e}\"\n",
         "        else:\n",
@@ -449,45 +277,12 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 91,
+      "execution_count": null,
       "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/",
-          "height": 327,
-          "referenced_widgets": [
-            "9888d10ad0e947559ce773f87f21243c",
-            "715aacc402124d6e88156753e186793c",
-            "531e30aab5c54887a2036bce8014f73f",
-            "751bea36ac094e6484f7049a6afb920b",
-            "e442e59e7b064743b8b99c943b993035",
-            "a8089a19bb59481abcb378730df0310a",
-            "529043f4544342ce8a18ece90fe9f939",
-            "116c3db04c6b4675a3c4dfe0847e3d94",
-            "1e263ccf0c274787990fdf5642205aa5",
-            "16d7758cc50a4735a1238aaf120a626c",
-            "9d18b32f4c7c47fda88ea382db9832f5"
-          ]
-        },
         "collapsed": true,
-        "id": "-RkbXEdC7b9P",
-        "outputId": "dc1b3017-904d-4a8e-8a7f-0c33e4bd5d30"
+        "id": "-RkbXEdC7b9P"
       },
-      "outputs": [
-        {
-          "name": "stderr",
-          "output_type": "stream",
-          "text": [
-            "Loading weights: 100%|██████████| 103/103 [00:00<00:00, 963.74it/s]\n"
-          ]
-        },
-        {
-          "name": "stdout",
-          "output_type": "stream",
-          "text": [
-            "✅ Cell 4A Loaded: Boolean Search based on tutorial is ready.\n"
-          ]
-        }
-      ],
+      "outputs": [],
       "source": [
         "# ==========================================\n",
         "# CELL 4A: Boolean Search Core - Based on Tutorial 6\n",
@@ -613,23 +408,11 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 92,
+      "execution_count": null,
       "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "nMTPgfSZ7ena",
-        "outputId": "d0de1459-1ffa-4aca-eb8c-7d934c4d07ee"
+        "id": "nMTPgfSZ7ena"
       },
-      "outputs": [
-        {
-          "name": "stdout",
-          "output_type": "stream",
-          "text": [
-            "✅ Cell 4B Loaded: Merged AI + Boolean Search is ready.\n"
-          ]
-        }
-      ],
+      "outputs": [],
       "source": [
         "# ==========================================\n",
         "# CELL 4B: Merged Boolean Search & AI Summary Interface\n",
@@ -738,7 +521,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 93,
+      "execution_count": null,
       "metadata": {
         "id": "ujqGOd27f7Ki"
       },
@@ -849,7 +632,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 94,
+      "execution_count": null,
       "metadata": {
         "id": "PDy_tgK8gVy-"
       },
@@ -930,9 +713,9 @@
         "    # 1. בדיקה שהועלתה לפחות תמונה אחת\n",
         "    if not files or len(files) == 0:\n",
         "        return \"<div style='color:#ff453a; text-align:center; padding:10px; font-family: Inter;'>⚠️ Please upload at least one image first.</div>\"\n",
-        "    \n",
+        "\n",
         "    combined_html_report = \"\"\n",
-        "    \n",
+        "\n",
         "    # 2. לולאה שרצה על כל התמונות שהועלו בבת אחת\n",
         "    for idx, file_obj in enumerate(files):\n",
         "        try:\n",
@@ -944,7 +727,7 @@
         "            # טעינת התמונה ושליפת שם הקובץ המקורי\n",
         "            img = PIL.Image.open(img_path)\n",
         "            filename = os.path.basename(img_path)\n",
-        "            \n",
+        "\n",
         "            # הפרומפט לג'מיני\n",
         "            prompt = (\n",
         "                \"You are an expert plant pathologist with access to a comprehensive basil research database. \"\n",
@@ -954,18 +737,18 @@
         "                \"3. 'recommendations': a structured list of 3 actionable steps to treat or maintain the plant. \"\n",
         "                \"Return ONLY the raw JSON block without markdown formatting.\"\n",
         "            )\n",
-        "            \n",
+        "\n",
         "            # שליחה ל-Gemini 2.5 Flash\n",
         "            response = vision_model.generate_content([prompt, img])\n",
-        "            \n",
+        "\n",
         "            # פיענוח ה-JSON\n",
         "            clean_text = response.text.strip().replace(\"```json\", \"\").replace(\"```\", \"\")\n",
         "            result_dict = json.loads(clean_text)\n",
-        "            \n",
+        "\n",
         "            status = result_dict.get(\"status\", \"unknown\")\n",
         "            diagnosis = result_dict.get(\"diagnosis\", \"No diagnosis provided.\")\n",
         "            recs = result_dict.get(\"recommendations\", [])\n",
-        "            \n",
+        "\n",
         "            # התאמת צבעים ועיצוב לפי הסטטוס של התמונה הספציפית\n",
         "            if status == \"healthy\":\n",
         "                status_html = \"<span style='background: rgba(48, 209, 88, 0.15); color: #30d158; padding: 6px 12px; border-radius: 8px; font-weight: 600; font-size: 13px;'>✅ Healthy</span>\"\n",
@@ -976,9 +759,9 @@
         "            else:\n",
         "                status_html = \"<span style='background: rgba(255, 69, 58, 0.15); color: #ff453a; padding: 6px 12px; border-radius: 8px; font-weight: 600; font-size: 13px;'>🔴 Severe Issue</span>\"\n",
         "                border_color = \"rgba(255, 69, 58, 0.4)\"\n",
-        "                \n",
+        "\n",
         "            recs_html = \"\".join([f\"<li>{r}</li>\" for r in recs])\n",
-        "            \n",
+        "\n",
         "            # בניית תת-כרטיסייה ייעודית עבור הקובץ הנוכחי\n",
         "            combined_html_report += f\"\"\"\n",
         "            <div class=\"page-card\" style=\"margin-top: 14px; border: 1px solid {border_color}; padding: 16px; background: rgba(0,0,0,0.2);\">\n",
@@ -1000,7 +783,7 @@
         "            \"\"\"\n",
         "        except Exception as e:\n",
         "            combined_html_report += f\"<div style='color:#ff453a; padding:10px;'>⚠️ Error analyzing image #{idx+1}: {str(e)}</div>\"\n",
-        "            \n",
+        "\n",
         "    # 3. עטיפת כל הדוחות בכרטיסייה ראשית אחת גדולה\n",
         "    final_container = f\"\"\"\n",
         "    <div class=\"page-card\" style=\"margin-top: 24px; border: 1px solid rgba(126, 214, 98, 0.35);\">\n",
@@ -1019,7 +802,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 95,
+      "execution_count": null,
       "metadata": {
         "id": "9oAg7jrhLwdy"
       },
@@ -1114,23 +897,11 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 96,
+      "execution_count": null,
       "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "TIDz7p2vWXL7",
-        "outputId": "3f8ee45b-0258-4898-a318-715882df4a80"
+        "id": "TIDz7p2vWXL7"
       },
-      "outputs": [
-        {
-          "name": "stdout",
-          "output_type": "stream",
-          "text": [
-            "✅ Live sensor logic loaded correctly.\n"
-          ]
-        }
-      ],
+      "outputs": [],
       "source": [
         "# ==========================================\n",
         "# LIVE SENSOR LOGIC - Based on Tutorial Code\n",
@@ -1385,7 +1156,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 97,
+      "execution_count": null,
       "metadata": {
         "id": "q0mnt3QGI73v"
       },
@@ -1447,7 +1218,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 98,
+      "execution_count": null,
       "metadata": {
         "id": "WuywZZowUbdq"
       },
@@ -1491,7 +1262,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 99,
+      "execution_count": null,
       "metadata": {
         "id": "OgcryBbeXEnN"
       },
@@ -1880,54 +1651,11 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 100,
+      "execution_count": null,
       "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/",
-          "height": 680
-        },
-        "id": "o8Xb7Ya4gOWB",
-        "outputId": "97cdeded-f97b-491f-c3f6-15861bd60576"
+        "id": "o8Xb7Ya4gOWB"
       },
-      "outputs": [
-        {
-          "name": "stderr",
-          "output_type": "stream",
-          "text": [
-            "C:\\Users\\liele\\AppData\\Local\\Temp\\ipykernel_22800\\392321025.py:5: UserWarning: The parameters have been moved from the Blocks constructor to the launch() method in Gradio 6.0: css. Please pass these parameters to launch() instead.\n",
-            "  with gr.Blocks(css=GLOBAL_CSS,title=\"My Basil Garden\") as app:\n"
-          ]
-        },
-        {
-          "name": "stdout",
-          "output_type": "stream",
-          "text": [
-            "* Running on local URL:  http://127.0.0.1:7865\n",
-            "\n",
-            "Could not create share link. Please check your internet connection or our status page: https://status.gradio.app.\n"
-          ]
-        },
-        {
-          "data": {
-            "text/html": [
-              "<div><iframe src=\"http://127.0.0.1:7865/\" width=\"100%\" height=\"500\" allow=\"autoplay; camera; microphone; clipboard-read; clipboard-write;\" frameborder=\"0\" allowfullscreen></iframe></div>"
-            ],
-            "text/plain": [
-              "<IPython.core.display.HTML object>"
-            ]
-          },
-          "metadata": {},
-          "output_type": "display_data"
-        },
-        {
-          "data": {
-            "text/plain": []
-          },
-          "execution_count": 100,
-          "metadata": {},
-          "output_type": "execute_result"
-        }
-      ],
+      "outputs": [],
       "source": [
         "# ==========================================\n",
         "# FULL GUI APP\n",
@@ -1972,10 +1700,10 @@
         "\n",
         "        with gr.Column(elem_classes=[\"main-wrapper\"]):\n",
         "\n",
-        "           \n",
+        "\n",
         "            upload_status = gr.HTML(update_upload_preview([])[0])\n",
         "            analyze_btn = gr.Button(\"🚀 Run AI Analysis\", variant=\"primary\", elem_classes=[\"custom-run-btn\"])\n",
-        "            \n",
+        "\n",
         "            # ---> הוסיפי את השורה הזו כדי שיהיה איפה להציג את תשובת ה-AI! <---\n",
         "            ai_analysis_output = gr.HTML(\"\")\n",
         "\n",
@@ -2103,7 +1831,7 @@
         "        inputs=[],\n",
         "        outputs=[dashboard_screen, upload_screen, research_screen, live_screen]\n",
         "    )\n",
-        "    \n",
+        "\n",
         "    analyze_btn.click(\n",
         "        fn=run_gemini_analysis,\n",
         "        inputs=[plant_images],\n",
@@ -2178,7 +1906,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 101,
+      "execution_count": null,
       "metadata": {
         "collapsed": true,
         "id": "CU7ZjHTXo8hy"
@@ -2470,7 +2198,7 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 102,
+      "execution_count": null,
       "metadata": {
         "id": "lELW-B6jdPQY"
       },
@@ -2543,7 +2271,8 @@
   ],
   "metadata": {
     "colab": {
-      "provenance": []
+      "provenance": [],
+      "include_colab_link": true
     },
     "kernelspec": {
       "display_name": "Python 3",
@@ -2560,352 +2289,6 @@
       "nbconvert_exporter": "python",
       "pygments_lexer": "ipython3",
       "version": "3.13.13"
-    },
-    "widgets": {
-      "application/vnd.jupyter.widget-state+json": {
-        "116c3db04c6b4675a3c4dfe0847e3d94": {
-          "model_module": "@jupyter-widgets/base",
-          "model_module_version": "1.2.0",
-          "model_name": "LayoutModel",
-          "state": {
-            "_model_module": "@jupyter-widgets/base",
-            "_model_module_version": "1.2.0",
-            "_model_name": "LayoutModel",
-            "_view_count": null,
-            "_view_module": "@jupyter-widgets/base",
-            "_view_module_version": "1.2.0",
-            "_view_name": "LayoutView",
-            "align_content": null,
-            "align_items": null,
-            "align_self": null,
-            "border": null,
-            "bottom": null,
-            "display": null,
-            "flex": null,
-            "flex_flow": null,
-            "grid_area": null,
-            "grid_auto_columns": null,
-            "grid_auto_flow": null,
-            "grid_auto_rows": null,
-            "grid_column": null,
-            "grid_gap": null,
-            "grid_row": null,
-            "grid_template_areas": null,
-            "grid_template_columns": null,
-            "grid_template_rows": null,
-            "height": null,
-            "justify_content": null,
-            "justify_items": null,
-            "left": null,
-            "margin": null,
-            "max_height": null,
-            "max_width": null,
-            "min_height": null,
-            "min_width": null,
-            "object_fit": null,
-            "object_position": null,
-            "order": null,
-            "overflow": null,
-            "overflow_x": null,
-            "overflow_y": null,
-            "padding": null,
-            "right": null,
-            "top": null,
-            "visibility": null,
-            "width": null
-          }
-        },
-        "16d7758cc50a4735a1238aaf120a626c": {
-          "model_module": "@jupyter-widgets/base",
-          "model_module_version": "1.2.0",
-          "model_name": "LayoutModel",
-          "state": {
-            "_model_module": "@jupyter-widgets/base",
-            "_model_module_version": "1.2.0",
-            "_model_name": "LayoutModel",
-            "_view_count": null,
-            "_view_module": "@jupyter-widgets/base",
-            "_view_module_version": "1.2.0",
-            "_view_name": "LayoutView",
-            "align_content": null,
-            "align_items": null,
-            "align_self": null,
-            "border": null,
-            "bottom": null,
-            "display": null,
-            "flex": null,
-            "flex_flow": null,
-            "grid_area": null,
-            "grid_auto_columns": null,
-            "grid_auto_flow": null,
-            "grid_auto_rows": null,
-            "grid_column": null,
-            "grid_gap": null,
-            "grid_row": null,
-            "grid_template_areas": null,
-            "grid_template_columns": null,
-            "grid_template_rows": null,
-            "height": null,
-            "justify_content": null,
-            "justify_items": null,
-            "left": null,
-            "margin": null,
-            "max_height": null,
-            "max_width": null,
-            "min_height": null,
-            "min_width": null,
-            "object_fit": null,
-            "object_position": null,
-            "order": null,
-            "overflow": null,
-            "overflow_x": null,
-            "overflow_y": null,
-            "padding": null,
-            "right": null,
-            "top": null,
-            "visibility": null,
-            "width": null
-          }
-        },
-        "1e263ccf0c274787990fdf5642205aa5": {
-          "model_module": "@jupyter-widgets/controls",
-          "model_module_version": "1.5.0",
-          "model_name": "ProgressStyleModel",
-          "state": {
-            "_model_module": "@jupyter-widgets/controls",
-            "_model_module_version": "1.5.0",
-            "_model_name": "ProgressStyleModel",
-            "_view_count": null,
-            "_view_module": "@jupyter-widgets/base",
-            "_view_module_version": "1.2.0",
-            "_view_name": "StyleView",
-            "bar_color": null,
-            "description_width": ""
-          }
-        },
-        "529043f4544342ce8a18ece90fe9f939": {
-          "model_module": "@jupyter-widgets/controls",
-          "model_module_version": "1.5.0",
-          "model_name": "DescriptionStyleModel",
-          "state": {
-            "_model_module": "@jupyter-widgets/controls",
-            "_model_module_version": "1.5.0",
-            "_model_name": "DescriptionStyleModel",
-            "_view_count": null,
-            "_view_module": "@jupyter-widgets/base",
-            "_view_module_version": "1.2.0",
-            "_view_name": "StyleView",
-            "description_width": ""
-          }
-        },
-        "531e30aab5c54887a2036bce8014f73f": {
-          "model_module": "@jupyter-widgets/controls",
-          "model_module_version": "1.5.0",
-          "model_name": "FloatProgressModel",
-          "state": {
-            "_dom_classes": [],
-            "_model_module": "@jupyter-widgets/controls",
-            "_model_module_version": "1.5.0",
-            "_model_name": "FloatProgressModel",
-            "_view_count": null,
-            "_view_module": "@jupyter-widgets/controls",
-            "_view_module_version": "1.5.0",
-            "_view_name": "ProgressView",
-            "bar_style": "success",
-            "description": "",
-            "description_tooltip": null,
-            "layout": "IPY_MODEL_116c3db04c6b4675a3c4dfe0847e3d94",
-            "max": 103,
-            "min": 0,
-            "orientation": "horizontal",
-            "style": "IPY_MODEL_1e263ccf0c274787990fdf5642205aa5",
-            "value": 103
-          }
-        },
-        "715aacc402124d6e88156753e186793c": {
-          "model_module": "@jupyter-widgets/controls",
-          "model_module_version": "1.5.0",
-          "model_name": "HTMLModel",
-          "state": {
-            "_dom_classes": [],
-            "_model_module": "@jupyter-widgets/controls",
-            "_model_module_version": "1.5.0",
-            "_model_name": "HTMLModel",
-            "_view_count": null,
-            "_view_module": "@jupyter-widgets/controls",
-            "_view_module_version": "1.5.0",
-            "_view_name": "HTMLView",
-            "description": "",
-            "description_tooltip": null,
-            "layout": "IPY_MODEL_a8089a19bb59481abcb378730df0310a",
-            "placeholder": "​",
-            "style": "IPY_MODEL_529043f4544342ce8a18ece90fe9f939",
-            "value": "Loading weights: 100%"
-          }
-        },
-        "751bea36ac094e6484f7049a6afb920b": {
-          "model_module": "@jupyter-widgets/controls",
-          "model_module_version": "1.5.0",
-          "model_name": "HTMLModel",
-          "state": {
-            "_dom_classes": [],
-            "_model_module": "@jupyter-widgets/controls",
-            "_model_module_version": "1.5.0",
-            "_model_name": "HTMLModel",
-            "_view_count": null,
-            "_view_module": "@jupyter-widgets/controls",
-            "_view_module_version": "1.5.0",
-            "_view_name": "HTMLView",
-            "description": "",
-            "description_tooltip": null,
-            "layout": "IPY_MODEL_16d7758cc50a4735a1238aaf120a626c",
-            "placeholder": "​",
-            "style": "IPY_MODEL_9d18b32f4c7c47fda88ea382db9832f5",
-            "value": " 103/103 [00:00&lt;00:00, 384.11it/s, Materializing param=pooler.dense.weight]"
-          }
-        },
-        "9888d10ad0e947559ce773f87f21243c": {
-          "model_module": "@jupyter-widgets/controls",
-          "model_module_version": "1.5.0",
-          "model_name": "HBoxModel",
-          "state": {
-            "_dom_classes": [],
-            "_model_module": "@jupyter-widgets/controls",
-            "_model_module_version": "1.5.0",
-            "_model_name": "HBoxModel",
-            "_view_count": null,
-            "_view_module": "@jupyter-widgets/controls",
-            "_view_module_version": "1.5.0",
-            "_view_name": "HBoxView",
-            "box_style": "",
-            "children": [
-              "IPY_MODEL_715aacc402124d6e88156753e186793c",
-              "IPY_MODEL_531e30aab5c54887a2036bce8014f73f",
-              "IPY_MODEL_751bea36ac094e6484f7049a6afb920b"
-            ],
-            "layout": "IPY_MODEL_e442e59e7b064743b8b99c943b993035"
-          }
-        },
-        "9d18b32f4c7c47fda88ea382db9832f5": {
-          "model_module": "@jupyter-widgets/controls",
-          "model_module_version": "1.5.0",
-          "model_name": "DescriptionStyleModel",
-          "state": {
-            "_model_module": "@jupyter-widgets/controls",
-            "_model_module_version": "1.5.0",
-            "_model_name": "DescriptionStyleModel",
-            "_view_count": null,
-            "_view_module": "@jupyter-widgets/base",
-            "_view_module_version": "1.2.0",
-            "_view_name": "StyleView",
-            "description_width": ""
-          }
-        },
-        "a8089a19bb59481abcb378730df0310a": {
-          "model_module": "@jupyter-widgets/base",
-          "model_module_version": "1.2.0",
-          "model_name": "LayoutModel",
-          "state": {
-            "_model_module": "@jupyter-widgets/base",
-            "_model_module_version": "1.2.0",
-            "_model_name": "LayoutModel",
-            "_view_count": null,
-            "_view_module": "@jupyter-widgets/base",
-            "_view_module_version": "1.2.0",
-            "_view_name": "LayoutView",
-            "align_content": null,
-            "align_items": null,
-            "align_self": null,
-            "border": null,
-            "bottom": null,
-            "display": null,
-            "flex": null,
-            "flex_flow": null,
-            "grid_area": null,
-            "grid_auto_columns": null,
-            "grid_auto_flow": null,
-            "grid_auto_rows": null,
-            "grid_column": null,
-            "grid_gap": null,
-            "grid_row": null,
-            "grid_template_areas": null,
-            "grid_template_columns": null,
-            "grid_template_rows": null,
-            "height": null,
-            "justify_content": null,
-            "justify_items": null,
-            "left": null,
-            "margin": null,
-            "max_height": null,
-            "max_width": null,
-            "min_height": null,
-            "min_width": null,
-            "object_fit": null,
-            "object_position": null,
-            "order": null,
-            "overflow": null,
-            "overflow_x": null,
-            "overflow_y": null,
-            "padding": null,
-            "right": null,
-            "top": null,
-            "visibility": null,
-            "width": null
-          }
-        },
-        "e442e59e7b064743b8b99c943b993035": {
-          "model_module": "@jupyter-widgets/base",
-          "model_module_version": "1.2.0",
-          "model_name": "LayoutModel",
-          "state": {
-            "_model_module": "@jupyter-widgets/base",
-            "_model_module_version": "1.2.0",
-            "_model_name": "LayoutModel",
-            "_view_count": null,
-            "_view_module": "@jupyter-widgets/base",
-            "_view_module_version": "1.2.0",
-            "_view_name": "LayoutView",
-            "align_content": null,
-            "align_items": null,
-            "align_self": null,
-            "border": null,
-            "bottom": null,
-            "display": null,
-            "flex": null,
-            "flex_flow": null,
-            "grid_area": null,
-            "grid_auto_columns": null,
-            "grid_auto_flow": null,
-            "grid_auto_rows": null,
-            "grid_column": null,
-            "grid_gap": null,
-            "grid_row": null,
-            "grid_template_areas": null,
-            "grid_template_columns": null,
-            "grid_template_rows": null,
-            "height": null,
-            "justify_content": null,
-            "justify_items": null,
-            "left": null,
-            "margin": null,
-            "max_height": null,
-            "max_width": null,
-            "min_height": null,
-            "min_width": null,
-            "object_fit": null,
-            "object_position": null,
-            "order": null,
-            "overflow": null,
-            "overflow_x": null,
-            "overflow_y": null,
-            "padding": null,
-            "right": null,
-            "top": null,
-            "visibility": null,
-            "width": null
-          }
-        }
-      }
     }
   },
   "nbformat": 4,
